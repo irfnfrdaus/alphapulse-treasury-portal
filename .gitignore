@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.DS_Store
+*.local
+*.log
+.vscode/
+.idea/
+treasury.db-journal

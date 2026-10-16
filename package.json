@@ -1,0 +1,24 @@
+{
+  "name": "alphapulse-treasury-portal",
+  "version": "1.0.0",
+  "description": "AlphaPulse - Enterprise Treasury & Multi-Currency Liquidity Management Portal",
+  "scripts": {
+    "dev:server": "cd server && npm run dev",
+    "dev:client": "cd client && npm run dev",
+    "build:client": "cd client && npm run build",
+    "start": "cd server && npm start"
+  },
+  "keywords": [
+    "treasury-management",
+    "multi-currency",
+    "liquidity-risk",
+    "fintech",
+    "full-stack",
+    "react",
+    "nodejs",
+    "sqlite",
+    "banking"
+  ],
+  "author": "Muhammad Irfan Firdaus",
+  "license": "MIT"
+}
