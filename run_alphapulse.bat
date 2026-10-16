@@ -1,26 +1,30 @@
 @echo off
-title AlphaPulse Enterprise Treasury Portal
+title AlphaPulse Launcher
 echo ========================================================
 echo   STARTING ALPHAPULSE ENTERPRISE TREASURY SUITE
 echo ========================================================
 
-:: 1. Start Node.js Express REST API (Port 5050)
-echo [1/2] Starting Backend REST API on Port 5050...
-start "AlphaPulse Backend" /min cmd /c "cd /d \"%~dp0server\" && npm start"
+:: Change directory to server folder
+cd /d "%~dp0server"
 
-:: Wait 2 seconds for backend to initialize
+:: Kill any existing process holding port 5050
+for /f "tokens=5" %%a in ('netstat -aon ^| findstr :5050') do (
+    taskkill /F /PID %%a 2>nul
+)
+
+:: Start Node.js server in a dedicated window
+echo Starting AlphaPulse backend and frontend server...
+start "AlphaPulse Server (Port 5050)" cmd /k "node src/index.js"
+
+:: Wait 2 seconds for server to be ready
 timeout /t 2 >nul
 
-:: 2. Start React + Vite Client (Port 3000)
-echo [2/2] Starting React Frontend on Port 3000...
-start "AlphaPulse Frontend" /min cmd /c "cd /d \"%~dp0client\" && npm run dev"
+:: Open browser directly
+start http://localhost:5050
 
-:: Wait 3 seconds then open browser
+echo ========================================================
+echo   AlphaPulse is running at: http://localhost:5050
+echo   Close the server window to stop.
+echo ========================================================
 timeout /t 3 >nul
-start http://localhost:3000
-
-echo ========================================================
-echo   AlphaPulse is running live at http://localhost:3000
-echo   Backend REST API active at http://127.0.0.1:5050
-echo ========================================================
 exit

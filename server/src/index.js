@@ -1,15 +1,22 @@
 import express from 'express';
 import cors from 'cors';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { db, initDatabase } from './db.js';
 
 // Initialize Database
 initDatabase();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const CLIENT_DIST = path.join(__dirname, '..', '..', 'client', 'dist');
 
 const app = express();
 const PORT = process.env.PORT || 5050;
 
 app.use(cors());
 app.use(express.json());
+app.use(express.static(CLIENT_DIST));
 
 // 1. Health Endpoint
 app.get('/api/health', (req, res) => {
@@ -339,6 +346,14 @@ app.post('/api/stress-test', (req, res) => {
 app.get('/api/audit-trail', (req, res) => {
   const logs = db.prepare('SELECT * FROM audit_logs ORDER BY timestamp DESC LIMIT 100').all();
   res.json(logs);
+});
+
+// SPA Client Fallback
+app.get('*', (req, res, next) => {
+  if (req.path.startsWith('/api')) {
+    return next();
+  }
+  res.sendFile(path.join(CLIENT_DIST, 'index.html'));
 });
 
 // Start Server

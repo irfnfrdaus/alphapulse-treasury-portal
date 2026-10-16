@@ -104,9 +104,8 @@ Developed by **Muhammad Irfan Firdaus** (UTP B.IT Hons, Major in Big Data Analyt
 
 ### 2. 1-Click Launch (Windows)
 Double-click `run_alphapulse.bat` in the root folder. It will:
-1. Boot the Node.js REST API on `http://127.0.0.1:5050`
-2. Start the Vite React client on `http://localhost:3000`
-3. Launch your browser automatically.
+1. Boot the unified server (React Frontend + Node.js REST API) on `http://localhost:5050`
+2. Launch your browser automatically to `http://localhost:5050`.
 
 ### 3. Manual Launch
 ```bash
